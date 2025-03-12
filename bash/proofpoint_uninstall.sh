@@ -7,6 +7,14 @@ set -o pipefail
 LOG="/var/log/uninstall_metaclient.log"
 exec 1>> "$LOG" 2>&1
 
+echo "$(date) | Checking if MetaClient is still installed..."
+
+# Check if MetaClient is already uninstalled
+if [[ ! -d "/Applications/MetaClient.app" && ! -d "/Library/Application Support/MetaNetworks" ]]; then
+    echo "$(date) | MetaClient is not installed. Exiting..."
+    exit 0
+fi
+
 echo "$(date) | Starting MetaClient Uninstall"
 
 META_PROCESS=("MetaClient" "meta-agent-service")
